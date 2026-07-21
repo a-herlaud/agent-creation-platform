@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    networks:
+      - agent_platform
+    restart: unless-stopped
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: proxy
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - agent_platform
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend/src:/app/src:Z
+    networks:
+      - agent_platform
+    restart: unless-stopped
+
+
+networks:
+  agent_platform:
+    driver: bridge
