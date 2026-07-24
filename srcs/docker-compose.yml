@@ -33,7 +33,32 @@ services:
       - agent_platform
     restart: unless-stopped
 
+  database:
+    container_name: database
+    # volumes:
+    #   - database:/var/lib/postgresql/data:Z
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../.env
+    networks:
+      - agent_platform
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U {DB_AUTH_NAME} -d {DB_AUTH_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
 
 networks:
   agent_platform:
     driver: bridge
+
+volumes:
+  database:
+    driver: local
