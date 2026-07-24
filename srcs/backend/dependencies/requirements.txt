@@ -2,3 +2,5 @@ fastapi
 uvicorn
 litellm
 pypdf
+sqlalchemy
+psycopg2-binary

@@ -4,9 +4,14 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: backend
+    env_file:
+      - ../.env
     networks:
       - agent_platform
     restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
 
   proxy:
     build:

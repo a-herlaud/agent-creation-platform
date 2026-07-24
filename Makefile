@@ -1,4 +1,6 @@
-COMPOSE = docker compose -f ./srcs/docker-compose.yml
+COMPOSE = docker compose \
+	-f ./srcs/docker-compose.yml \
+	--env-file .env
 
 all: up
 
