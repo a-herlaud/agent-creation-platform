@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Sparkles } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Sparkles, Plus } from 'lucide-react'
 
 const conversation = [
   {
@@ -18,6 +19,7 @@ const activity = [
 ]
 
 function Home() {
+  const navigate = useNavigate()
   const [messages, setMessages] = useState(conversation)
   const [messageText, setMessageText] = useState('')
   const [isSending, setIsSending] = useState(false)
@@ -99,6 +101,15 @@ function Home() {
             <h1>Agent Platform</h1>
           </div>
         </div>
+
+        <button
+          type="button"
+          className="create-prompt-button"
+          onClick={() => navigate('/prompts/new')}
+        >
+          <Plus size={18} />
+          Create a Prompt
+        </button>
 
         <section className="panel">
           <div className="panel-heading">
